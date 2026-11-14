@@ -44,63 +44,34 @@ Skill instructions were not rewritten. The only edits are path fixes required by
 
 ## Install into Cursor
 
+One command, on Mac, Windows, or Linux. It needs Node.js. `-g` installs into your user folder so every project can see the skills. `-a cursor` targets Cursor. `--skill '*'` takes the whole catalog and skips the picker.
+
+```bash
+npx skills add tushar1599/all-in-one-skillset -g -a cursor -y --skill '*'
+```
+
+The `skills` CLI walks `skills/<namespace>/<skill>/SKILL.md`, which is this repo's layout. Two skills are both named `prototype` (Matt Pocock and Emil Kowalski). The installer keeps the first one it finds. Install the other under a second name:
+
+```bash
+npx skills add tushar1599/all-in-one-skillset -g -a cursor -y --skill prototype --rename design-prototype
+```
+
+Run that only if the first command did not install both. `--rename` changes the folder and the `name` field of the one skill it installs.
+
 Cursor reads a skill from a folder that contains `SKILL.md`:
 
-- Project: `.cursor/skills/<skill-name>/SKILL.md`
-- User: `%USERPROFILE%\.cursor\skills\<skill-name>\SKILL.md`
+- This project: `.cursor/skills/<skill-name>/SKILL.md`
+- Every project: `~/.cursor/skills/<skill-name>/SKILL.md` (`%USERPROFILE%\.cursor\skills` on Windows)
 
-This repo keeps a namespace so the license stays next to the skills. Installing means copying each skill folder (the directory that contains `SKILL.md`) into `.cursor/skills/`. Do not copy the namespace `LICENSE` into `.cursor/skills` as if it were a skill. Leave `support/` out unless you also copy the skills that link to it, and then keep the relative path those links use.
+Drop `-g` to install into the current project only.
 
-Install every skill for every project by copying into `%USERPROFILE%\.cursor\skills`. The paths below are absolute, so the command works from any directory. `skills\mattpocock` alone only works when the shell is already inside this repo; from `C:\Users\TUSHAR` that path does not exist.
+Corey Haines and Aaron He Zhu skills link to a `support/` folder next to the namespace. `npx skills` copies each skill folder and does not copy that sibling. On this machine those files were placed in `%USERPROFILE%\.cursor\support`, which is where `../support/...` resolves after a flat install into `%USERPROFILE%\.cursor\skills`.
 
-```powershell
-$src = "C:\tushar_projects\all-in-one-skillset\skills"
-$skillsDest = Join-Path $env:USERPROFILE ".cursor\skills"
-$supportDest = Join-Path $env:USERPROFILE ".cursor\support"
-New-Item -ItemType Directory -Force -Path $skillsDest, $supportDest | Out-Null
+The UI/UX search script needs Python 3 (`python` or `py -3`) and uses the standard library only. Inside this repo:
 
-Get-ChildItem $src -Directory | ForEach-Object {
-  $support = Join-Path $_.FullName "support"
-  if (Test-Path $support) {
-    Copy-Item (Join-Path $support "*") $supportDest -Recurse -Force
-  }
-  Get-ChildItem $_.FullName -Directory | Where-Object {
-    Test-Path (Join-Path $_.FullName "SKILL.md")
-  } | ForEach-Object {
-    $name = $_.Name
-    if ($_.FullName -match '\\emilkowalski\\prototype$') { $name = "design-prototype" }
-    $dest = Join-Path $skillsDest $name
-    if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
-    Copy-Item $_.FullName $dest -Recurse
-    if ($name -eq "design-prototype") {
-      $skillFile = Join-Path $dest "SKILL.md"
-      $text = [IO.File]::ReadAllText($skillFile).Replace("name: prototype", "name: design-prototype")
-      [IO.File]::WriteAllText($skillFile, $text)
-    }
-  }
-}
-
-$ui = Join-Path $skillsDest "ui-ux-pro-max\SKILL.md"
-$text = [IO.File]::ReadAllText($ui).Replace(
-  "skills/nextlevelbuilder/ui-ux-pro-max/scripts/search.py",
-  ($skillsDest.Replace("\", "/") + "/ui-ux-pro-max/scripts/search.py")
-)
-[IO.File]::WriteAllText($ui, $text)
+```bash
+py -3 skills/nextlevelbuilder/ui-ux-pro-max/scripts/search.py "error summary validation" --domain ux
 ```
-
-`support` is copied to `%USERPROFILE%\.cursor\support` because Corey Haines and Aaron He Zhu skills link to `../support/...` from the skill folder. Emil Kowalski's `prototype` is installed as `design-prototype` so it can sit beside Matt Pocock's `prototype`.
-
-To install into one project instead, set `$skillsDest` to that project's `.cursor\skills` and `$supportDest` to that project's `.cursor\support`.
-
-`npx skills add <owner>/<repo> -a cursor` is how the upstream repos install themselves. This collection nests skills under `skills/<namespace>/<skill>/`. If that installer does not list the nested folders, use the copy above. A single upstream can still be added from its own repository, for example `npx skills add mattpocock/skills -a cursor`.
-
-The UI/UX search script needs Python 3 on `PATH` (`python` or `py -3`). It uses the standard library only. From this repo:
-
-```powershell
-py -3 skills\nextlevelbuilder\ui-ux-pro-max\scripts\search.py "error summary validation" --domain ux
-```
-
-The global install command rewrites that path in the copied `SKILL.md` to `%USERPROFILE%\.cursor\skills\ui-ux-pro-max\scripts\search.py`. The copy in this repo still uses the collection path.
 
 ## Attribution
 
