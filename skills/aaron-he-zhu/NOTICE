@@ -1,0 +1,15 @@
+This directory contains files copied from https://github.com/aaron-he-zhu/aaron-marketing-skills
+at commit 2b9076d58d72d0ed86f5d4527ae0bfe06e9c43f4.
+
+Copyright 2024 Aaron He Zhu
+
+Licensed under the Apache License, Version 2.0. The license text is in LICENSE
+in this directory. Upstream had no NOTICE file. This NOTICE records the copy.
+
+Copied skill directories are the social, influencer, and paid-social skills
+that coreyhaines31/marketingskills does not already cover. Files those skills
+link to (benchmarks, contracts, and scripts) are under support/, with the
+upstream relative path kept. Links to skill folders that were not copied point
+at the upstream GitHub commit above.
+
+Skills copied: crisis-response-planner, dark-social-attributor, share-of-voice-tracker, social-measurement-loop, social-quality-auditor, engagement-inbox-manager, social-selling-planner, participation-warmup-planner, channel-portfolio-planner, voice-dossier-builder, platform-norm-profiler, trend-spotter, creator-content-auditor, content-amplifier, placement-exclusion-manager, fatigue-frequency-manager, ad-account-auditor.

@@ -1,0 +1,11 @@
+This repository is a collection of skill payloads copied from other projects.
+No single license covers the upstream code.
+
+Each directory under skills/ keeps the license and copyright notice of its
+upstream. Read skills/<namespace>/LICENSE before you use or redistribute that
+namespace. The anthropics namespace also keeps a LICENSE.txt inside each skill
+directory, and skills/anthropics/NOTICE records the copy. The aaron-he-zhu
+namespace is Apache License 2.0; skills/aaron-he-zhu/NOTICE records the copy.
+
+The README and this file explain the collection. They do not relicense the
+files under skills/.

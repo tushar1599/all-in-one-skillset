@@ -1,0 +1,14 @@
+This directory contains files copied from https://github.com/anthropics/skills
+at commit 2c5958ecac7cee2b583967a2c4981d0f4a75c579.
+
+Copied skill directories: skill-creator, mcp-builder, frontend-design, webapp-testing.
+Each of those directories keeps its own LICENSE.txt. Those four files are the
+Apache License, Version 2.0. skill-creator, mcp-builder, and webapp-testing
+include the appendix line "Copyright 2026 Anthropic, PBC." The frontend-design
+LICENSE.txt is the Apache License 2.0 terms and does not include a filled
+copyright appendix. That file was copied unchanged.
+
+No NOTICE file was present inside these four skill directories. The upstream
+THIRD_PARTY_NOTICES.md attributes imageio, FFmpeg, and other components used by
+skills that were not copied (document and media skills). It was not copied
+because those components are not in this directory.
